@@ -1,13 +1,21 @@
 // ERT: Estimated Reading Time (I am lazy)
 
-const wordCount = article.text.split(" ").length;
-const ERT = wordCount / 400
+const article = document.querySelector("article");
+const h1 = document.querySelector("h1");
 
-const ERTbox = document.createElement('div')
-ERTbox.textContent = `Estimated reading time: ${ERT}`
 
 function renderERT() {
-    if (!article) || (!h1) {
+    if (!article || !h1) {
         return;
     }
+
+    const wordCount = article.textContent.split(" ").length;
+    const ERT = Math.round(wordCount / 400);
+
+    const ERTBox = document.createElement('div');
+    ERTBox.textContent = `${ERT} min read`;
+
+    h1.insertAdjacentElement("afterend", ERTBox)
 }
+
+renderERT();
