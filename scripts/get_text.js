@@ -82,16 +82,17 @@ if (longElementsFallbackUsed == true) {
 }
 else {
     let totalCharacterCount = 0;
-    let wordCount = 0;
+    let characterCount = 0;
     for (let i = 0; i < (longElementsText.length); i += 1) {
-        wordCount = longElementsText[i].length;
-        if ((totalCharacterCount + wordCount) < 2000) {
+        characterCount = longElementsText[i].length;
+        if ((totalCharacterCount + characterCount) < 2000) {
             chosenLongElementsText.push(longElementsText[i]);
-            totalWordCount += wordCount;
+            totalCharacterCount += characterCount;
         }
-        else { //if (totalWordCount + wordCount >= 2000)
-            chosenLongElementsText.push(longElementsText[i].slice(0, 2000 - totalWordCount))
-            totalCharacterCount += longElementsText[i].slice(0, (2000 - totalWordCount));
+        else { //if (totalCharacterCount + characterCount >= 2000)
+            chosenLongElementsText.push(longElementsText[i].slice(0, 2000 - totalCharacterCount))
+            totalCharacterCount += longElementsText[i].slice(0, (2000 - totalCharacterCount)).length;
+            break;
         }
     }
 }
