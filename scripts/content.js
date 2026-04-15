@@ -1,4 +1,5 @@
 // ====== VARIABLES ======
+//order matters (checking will happen in order)
 
 // useful elements
 const shortElements = ["h1", "h2"];
@@ -19,17 +20,20 @@ let longElementsFallbackUsed = false;
 
 //check for short elements and store any text(if available) at shortElementsText
 for (let i = 0; i < (shortElements.length); i += 1) {
-    var shortElementNodes = document.querySelectorAll(shortElements[i]);
+    let shortElementNodes = document.querySelectorAll(shortElements[i]);
     for (let j = 0; j < (shortElementNodes.length); j += 1) {
         shortElementsText.push(shortElementNodes[j].textContent);
     }
 }
 
 //check for long elements and store any text(if available) at longElementsText
+//if one long element is found, do not check for the other long elements
 for (let i = 0; i < (longElements.length); i += 1) {
-    var longElementNodes = document.querySelectorAll(longElements[i]);
-    for (let j = 0; j < (longElementNodes.length); j += 1) {
-        longElementsText.push(longElementNodes[j].textContent);
+    if (longElementsText.length == 0) {
+        let longElementNodes = document.querySelectorAll(longElements[i]);
+        for (let j = 0; j < (longElementNodes.length); j += 1) {
+            longElementsText.push(longElementNodes[j].textContent);
+        }
     }
 }
 
@@ -38,7 +42,7 @@ for (let i = 0; i < (longElements.length); i += 1) {
 if (longElementsText.length == 0) {
     longElementsFallbackUsed = true;
     for (let i = 0; i < (longElementsFallback.length); i += 1) {
-        var longElementNodes = document.querySelectorAll(longElementsFallback[i]);
+        let longElementNodes = document.querySelectorAll(longElementsFallback[i]);
         for (let j = 0; j < (longElementNodes.length); j += 1) {
             longElementsText.push(longElementNodes[j].textContent);
         }
@@ -77,7 +81,17 @@ if (longElementsFallbackUsed == true) {
     }
 }
 else {
-    for (let i = 0; i < 2000; i += 1) {
-        chosenLongElementsText.push(longElementsText[0][i]);
+    let totalCharacterCount = 0;
+    let wordCount = 0;
+    for (let i = 0; i < (longElementsText.length); i += 1) {
+        wordCount = longElementsText[i].length;
+        if ((totalCharacterCount + wordCount) < 2000) {
+            chosenLongElementsText.push(longElementsText[i]);
+            totalWordCount += wordCount;
+        }
+        else { //if (totalWordCount + wordCount >= 2000)
+            chosenLongElementsText.push(longElementsText[i].slice(0, 2000 - totalWordCount))
+            totalCharacterCount += longElementsText[i].slice(0, (2000 - totalWordCount));
+        }
     }
 }
