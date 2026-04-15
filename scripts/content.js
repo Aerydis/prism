@@ -19,21 +19,17 @@ let longElementsFallbackUsed = false;
 
 //check for short elements and store any text(if available) at shortElementsText
 for (let i = 0; i < (shortElements.length); i += 1) {
-    var existingElements = [];
-    existingElements.push(document.querySelectorAll(shortElements));
-    //get all text from existing elements
-    for (let j = 0; j < (existingElements); j += 1) {
-        shortElementsText.push(existingElements[j].textContent);
+    var shortElementNodes = document.querySelectorAll(shortElements[i]);
+    for (let j = 0; j < (shortElementNodes.length); j += 1) {
+        shortElementsText.push(shortElementNodes[j].textContent);
     }
 }
 
 //check for long elements and store any text(if available) at longElementsText
 for (let i = 0; i < (longElements.length); i += 1) {
-    var existingElements = [];
-    existingElements.push(document.querySelectorAll(longElements[i]));
-    //get all text from existing elements
-    for (let j = 0; j < (existingElements); j += 1) {
-        longElementsText.push(existingElements[j].textContent);
+    var longElementNodes = document.querySelectorAll(longElements[i]);
+    for (let j = 0; j < (longElementNodes.length); j += 1) {
+        longElementsText.push(longElementNodes[j].textContent);
     }
 }
 
@@ -42,11 +38,9 @@ for (let i = 0; i < (longElements.length); i += 1) {
 if (longElementsText.length == 0) {
     longElementsFallbackUsed = true;
     for (let i = 0; i < (longElementsFallback.length); i += 1) {
-        var existingElements = [];
-        existingElements.push(document.querySelectorAll(longElementsFallback[i]));
-        //get all text from existing elements
-        for (let j = 0; j < (existingElements); j += 1) {
-            longElementsText.push(existingElements[j].textContent);
+        var longElementNodes = document.querySelectorAll(longElementsFallback[i]);
+        for (let j = 0; j < (longElementNodes.length); j += 1) {
+            longElementsText.push(longElementNodes[j].textContent);
         }
     }
 }
@@ -78,12 +72,12 @@ if (longElementsFallbackUsed == true) {
     }
     else {
         for (let i = 0; i < 3; i += 1) {
-            chosenLongElementsText.push(longElementsText[i])
+            chosenLongElementsText.push(longElementsText[i]);
         }
     }
 }
 else {
     for (let i = 0; i < 2000; i += 1) {
-        chosenLongElementsText.push(longElementsText[0][i])
+        chosenLongElementsText.push(longElementsText[0][i]);
     }
 }
