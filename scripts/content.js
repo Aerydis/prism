@@ -34,8 +34,8 @@ for (let i = 0; i < (longElementsText.length()); i += 1) {
 //sort long elements by length and only leave the longest ~3 
 longElementsText.sort((a, b) => a.length - b.length);
 if (longElementsText.length() < 3) {
-    chosenLongElementsText = longElementsText
+    chosenLongElementsText = longElementsText;
 }
 else {
-    chosenLongElementsText.push(longElementsText[0], longElementsText[1], longElementsText[2])
+    chosenLongElementsText.push(longElementsText[0], longElementsText[1], longElementsText[2]);
 }
