@@ -14,5 +14,9 @@
                 "<all_urls>"
             ]
         }
-    ]
+    ],
+    "background": {
+        "service_worker": ["scripts/comms.js"]
+    }
+
 }
