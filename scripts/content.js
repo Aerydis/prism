@@ -1,3 +1,5 @@
+// ====== VARIABLES ======
+
 // useful elements
 const shortElements = ["h1", "h2"];
 const longElements = ["article", "main"];
@@ -8,36 +10,50 @@ let shortElementsText = [];
 let longElementsText = [];
 let chosenLongElementsText = [];
 
-//check for short elements 
+//useful variables
+let longElementsFallbackUsed = false;
+
+
+
+// ====== GATHERING TEXT =======
+
+//check for short elements and store any text(if available) at shortElementsText
 for (let i = 0; i < (shortElements.length); i += 1) {
-    if (document.querySelectorAll(shortElements[i])) {
-        let foundElementTextList = document.querySelectorAll(shortElements[i]).innerText;
-        if (foundElementTextList.length > 0) {
-            shortElementsText.push(...foundElementTextList);
-        }
+    var existingElements = [];
+    existingElements.push(document.querySelectorAll(shortElements));
+    //get all text from existing elements
+    for (let j = 0; j < (existingElements); j += 1) {
+        shortElementsText.push(existingElements[j].textContent);
     }
 }
 
-//check for long elements, and if nothing exists, check for long elements fallback
+//check for long elements and store any text(if available) at longElementsText
 for (let i = 0; i < (longElements.length); i += 1) {
-    if (document.querySelectorAll(longElements[i])) {
-        let foundElementTextList = document.querySelectorAll(longElements[i]).innerText;
-        if (foundElementTextList.length > 0) {
-            longElementsText.push(...foundElementTextList);
+    var existingElements = [];
+    existingElements.push(document.querySelectorAll(longElements[i]));
+    //get all text from existing elements
+    for (let j = 0; j < (existingElements); j += 1) {
+        longElementsText.push(existingElements[j].textContent);
+    }
+}
+
+//and if nothing exists, check for long elements fallback and do the same. set longElementsFallbackUsed to true.
+//i know this could have been merged with the earlier paragraph but like that's too complicated for my tired soul
+if (longElementsText.length == 0) {
+    longElementsFallbackUsed = true;
+    for (let i = 0; i < (longElementsFallback.length); i += 1) {
+        var existingElements = [];
+        existingElements.push(document.querySelectorAll(longElementsFallback[i]));
+        //get all text from existing elements
+        for (let j = 0; j < (existingElements); j += 1) {
+            longElementsText.push(existingElements[j].textContent);
         }
     }
 }
 
-if (longElementsText.length == 0) {
-    for (let i = 0; i < (longElementsFallback.length); i += 1) {
-        if (document.querySelectorAll(longElementsFallback[i])) {
-            let foundElementTextList = document.querySelectorAll(longElementsFallback[i]).innerText;
-            if (foundElementTextList.length > 0) {
-                longElementsText.push(...foundElementTextList);
-            }
-        }
-    }
-}
+
+
+// ====== CLEAN ======
 
 //remove extra whitespace from elements
 for (let i = 0; i < (shortElementsText.length); i += 1) {
@@ -49,19 +65,25 @@ for (let i = 0; i < (longElementsText.length); i += 1) {
     longElementsText[i] = cleanedText;
 }
 
-//sort long elements by length and only leave the longest ~3 
-longElementsText.sort((a, b) => b.length - a.length);
-if (longElementsText.length < 3) {
-    chosenLongElementsText = longElementsText;
+
+
+// ====== SELECT ======
+
+//if fallback used, sort long elements by length and only leave the longest ~3 
+//if fallback not used, get first 2000 characters of text
+if (longElementsFallbackUsed == true) {
+    longElementsText.sort((a, b) => b.length - a.length);
+    if (longElementsText.length < 3) {
+        chosenLongElementsText = longElementsText;
+    }
+    else {
+        for (let i = 0; i < 3; i += 1) {
+            chosenLongElementsText.push(longElementsText[i])
+        }
+    }
 }
 else {
-    chosenLongElementsText.push(...longElementsText[0], ...longElementsText[1], ...longElementsText[2]);
+    for (let i = 0; i < 2000; i += 1) {
+        chosenLongElementsText.push(longElementsText[0][i])
+    }
 }
-
-//so first the selectors don't need angle brackets
-//and .length is not a function so no brackets
-//querySelectorAll() always returns a NodeList so the if statement is always truthy
-//the sorting logic sorts ascending
-//can't reassign a constant. use let or push or something
-
-//algorithm has issues will fix later
