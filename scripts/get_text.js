@@ -1,7 +1,10 @@
 // ====== VARIABLES ======
-//order matters (checking will happen in order)
 
-// useful elements
+//basics
+let articleTitle = document.querySelectorAll(title);
+
+//order matters (checking will happen in order)
+//useful elements
 const shortElements = ["h1", "h2"];
 const longElements = ["article", "main"];
 const longElementsFallback = ["p"]
@@ -96,3 +99,20 @@ else {
         }
     }
 }
+
+
+
+// ====== SEND MESSAGE TO COMMS.JS ======
+
+//create class for current article
+class article {
+    constructor(title, headers, body) {
+        this.title = title;
+        this.headers = headers;
+        this.body = body;    
+    }
+}
+
+const Original_Article = new article("articleTitle", shortElementsText, chosenLongElementsText);
+
+chrome.runtime.sendMessage("original article information", {info: Original_Article});
