@@ -70,6 +70,8 @@ for (let i = 0; i < (longElementsText.length); i += 1) {
 
 // ====== SELECT ======
 
+
+
 //if fallback used, sort long elements by length and only leave the longest ~3 
 //if fallback not used, get first 2000 characters of text
 if (longElementsFallbackUsed == true) {
