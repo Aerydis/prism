@@ -1,3 +1,6 @@
+
+
+//create prompts
 let promptPart1 = `You are an information extraction system.
 
 Given a news article, extract:
